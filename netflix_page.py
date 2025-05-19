@@ -41,8 +41,10 @@ class NetflixPage:
 
         return when
     
-    # Extract the headings of the table being displayed on the webpage 
     def __extract_table_heading(self,soup_obj):
+        """
+        Extract the headings of the table being displayed on the webpage
+        """
         table_rows = soup_obj.find('table').find('tr')
         
         table_headings = [ele.text for ele in table_rows.find_all('th')]
@@ -51,8 +53,10 @@ class NetflixPage:
         
         return table_headings
     
-    # Extract the content of the table being displayed on the webpage 
     def __extract_table_content(self,soup_obj):
+        """
+        Extract the content of the table being displayed on the webpage 
+        """
         table_rows = soup_obj.find('table').find_all('tr')
         table_rows.pop(0)
         rows = []
@@ -84,14 +88,18 @@ class NetflixPage:
         
         return rows
 
-    #Create & return a JSON Object
     def get_json_obj(self):
+        """
+        Create & return a JSON Object
+        """
         obj = self.get_dict_obj()
 
         return json.dumps(obj,default=str)
     
-    # Get the Dict format the Data
     def get_dict_obj(self):
+        """
+        Get the Dict format the Data
+        """
         obj = {
             'geography':self.geography,
             'media_type':get_media_type_geo(self.geography,self.media_type),
