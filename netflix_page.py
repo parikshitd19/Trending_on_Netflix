@@ -1,4 +1,4 @@
-from config import countries,global_lists_url_additions,date_str_format, base_url, country_lists_url_additions
+from config import countries, global_lists_url_additions,date_str_format, base_url, country_lists_url_additions
 from helper_functions import  get_date_obj,is_date_valid_to_query,construct_url,get_the_week,get_media_type_geo
 from bsoup import BSoup
 import json
@@ -9,8 +9,9 @@ class NetflixPage:
         self.geography = self.__verify_geography(geography)
         self.media_type = self.__verify_media_type(media_type)
         self.when = self.__verify_date(when)
+        self.url = construct_url(base_url=base_url,geography=self.geography,media_type=self.media_type,when=self.when)
         
-        self.page_bsoup_obj = BSoup(construct_url(base_url,self.geography,self.media_type,self.when))
+        self.page_bsoup_obj = BSoup(self.url)
         
         self.table_headings = self.__extract_table_heading(self.page_bsoup_obj.get_soup_obj())
         self.table_contents = self.__extract_table_content(self.page_bsoup_obj.get_soup_obj())
@@ -25,7 +26,7 @@ class NetflixPage:
     def __verify_geography(self,geography: str)->str:
         if  geography != 'Global' and geography not in countries.keys() and geography not in countries.values():
             raise Exception("Invalid Country Name")
-        return countries.get(geography,geography)
+        return geography
     
     def __verify_media_type(self,media_type: str)->str:
          if media_type not in global_lists_url_additions.values() and media_type not in country_lists_url_additions.values():
@@ -90,7 +91,7 @@ class NetflixPage:
 
     def get_json_obj(self):
         """
-        Create & return a JSON Object
+        Create & return a JSON object
         """
         obj = self.get_dict_obj()
 
@@ -98,14 +99,15 @@ class NetflixPage:
     
     def get_dict_obj(self):
         """
-        Get the Dict format the Data
+        Get the dictionary format of the data
         """
         obj = {
             'geography':self.geography,
             'media_type':get_media_type_geo(self.geography,self.media_type),
+            'query_url':self.url,
             'search_date':self.when,
-            'list_start_date':self.start_date,
-            'list_end_date':self.end_date,
+            'list_start_date':self.start_date.strftime("%Y-%m-%d"),
+            'list_end_date':self.end_date.strftime("%Y-%m-%d"),
             'list':[
                 {
                 self.table_headings[j] : self.table_contents[i][j] for j in range(len(self.table_headings))

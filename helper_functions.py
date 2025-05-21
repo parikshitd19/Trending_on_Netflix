@@ -44,18 +44,18 @@ def is_date_valid_to_query(when_dt_object):
         return True
     return False
 
-def construct_url(base_url, geography:str, of_what:str, when:str):
+def construct_url(base_url, geography:str, media_type:str, when:str):
     """
     construct the url for the page to extract data from 
     """
     url = base_url
-
-    if geography == 'Global' and of_what in global_lists_url_additions.values() and of_what!="":
-        url += '/'+of_what
+    
+    if geography == 'Global' and media_type in global_lists_url_additions.values() and media_type!="":
+        url += '/'+media_type
     elif geography in countries.keys():
         url += '/'+countries[geography]
-        if of_what in country_lists_url_additions.values() and of_what!="":
-            url += '/'+of_what
+        if media_type in country_lists_url_additions.values() and media_type!="":
+            url += '/'+media_type
    
     url += '?week='+when
 

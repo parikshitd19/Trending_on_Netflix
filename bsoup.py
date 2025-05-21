@@ -2,6 +2,9 @@ import requests
 from bs4 import BeautifulSoup
 
 class BSoup():
+    """
+    Fetch and the Beautiful Soup Object of a given URL
+    """
     def __init__(self,url:str):
         self.url = url
 
