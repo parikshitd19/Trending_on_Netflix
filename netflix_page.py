@@ -102,6 +102,7 @@ class NetflixPage:
         Get the dictionary format of the data
         """
         obj = {
+            '_id':self.__create_id(),
             'geography':self.geography,
             'media_type':get_media_type_geo(self.geography,self.media_type),
             'query_url':self.url,
@@ -116,5 +117,11 @@ class NetflixPage:
         }
 
         return obj
+    
+    def __create_id(self):
+        """
+        Create the index
+        """
+        return f"{self.geography}_{get_media_type_geo(self.geography,self.media_type)}_{self.start_date.strftime('%Y-%m-%d')}_{self.end_date.strftime('%Y-%m-%d')}"
                 
         

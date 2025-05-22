@@ -1,5 +1,13 @@
 base_url = "https://www.netflix.com/tudum/top10"
 
+#MongoDB Credentioals
+mongo_db_credentials = {
+    'ip':'localhost',
+    'port':'27017',
+    'username':'root',
+    'password':'example'
+}
+
 date_str_format = "%Y-%m-%d"
 
 web_page_dispaly_date_format = '%m/%d/%y'
