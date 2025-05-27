@@ -1,6 +1,6 @@
-from config import countries, global_lists_url_additions,date_str_format, base_url, country_lists_url_additions
-from helper_functions import  get_date_obj,is_date_valid_to_query,construct_url,get_the_week,get_media_type_geo
-from bsoup import BSoup
+from trending_on_netflix.config import countries, global_lists_url_additions,date_str_format, base_url, country_lists_url_additions
+from trending_on_netflix.helper_functions import  get_date_obj,is_date_valid_to_query,construct_url,get_the_week,get_media_type_geo
+from trending_on_netflix.bsoup import BSoup
 import json
 import datetime
 

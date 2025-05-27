@@ -1,7 +1,7 @@
 import datetime
-from config import *
+from trending_on_netflix.config import *
 from bs4 import BeautifulSoup
-from bsoup import BSoup
+from trending_on_netflix.bsoup import BSoup
 
 
 def get_todays_date():

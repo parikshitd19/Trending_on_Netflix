@@ -2,7 +2,7 @@ base_url = "https://www.netflix.com/tudum/top10"
 
 #MongoDB Credentioals
 mongo_db_credentials = {
-    'ip':'localhost',
+    'ip':'10.110.38.80',
     'port':'27017',
     'username':'root',
     'password':'example'
