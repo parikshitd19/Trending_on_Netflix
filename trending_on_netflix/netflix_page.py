@@ -80,7 +80,7 @@ class NetflixPage:
                 
                 values[5] = int(values[5].replace(',',''))
                 
-                if values[4] != "":
+                if ":" in values[4]:
                     values[4] = round(int(values[4].split(':')[0])+int(values[4].split(':')[1])/60,2)
                 else:
                     values[4] = None

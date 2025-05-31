@@ -24,7 +24,7 @@ def get_the_week(soup_obj:BeautifulSoup):
     """
     week = soup_obj.find("div", class_="section-eyebrow-heading").text
     
-    [start_date,end_date] = week.split(' - ')
+    [start_date,end_date] = week.split(' | ')[1].split(' - ')
     # print(start_date,end_date)
     end_date_obj = datetime.datetime.strptime(end_date,web_page_dispaly_date_format)
     # start_date = start_date.split(',')[0]+', '+str(end_date_obj.year)
