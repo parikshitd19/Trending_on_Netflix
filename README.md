@@ -18,7 +18,7 @@ Apache Airflow
 |---docker-compose.yaml
 |---Dockerfile
 ```
-- In the Docker file ensure the following lines are there:
+- In the Docker file ensure the following lines are there. Make sure to replace dag_file with the name of file you are trying to run:
 ```
 USER root
 COPY Trending_on_Netflix /opt/airflow/Trending_on_Netflix
