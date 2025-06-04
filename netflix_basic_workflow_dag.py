@@ -1,12 +1,10 @@
 
-import sys
-print("DEBUG sys.path:", sys.path)
+# import sys
+# print("DEBUG sys.path:", sys.path)
 
 import datetime
 from airflow.sdk import dag, task
-# import sys
-# sys.path.append('/opt/airflow/dags/Tending_on_Netflix')
-# print("my path", sys.path)
+
 from trending_on_netflix.netflix_page import NetflixPage
 from trending_on_netflix.database.mongodb_client import MongoDBClient
 from trending_on_netflix.config import mongo_db_credentials
@@ -18,16 +16,15 @@ from trending_on_netflix.config import mongo_db_credentials
     tags = ["example"],
 )
 def netflix_basic_workflow():
-    
+    '''
+    The DAG tests if the created Python package Trending_on_Netflix gets imported and executed
+    on Apache Airflow
+    '''
     @task(multiple_outputs=True)
     def fetch_netflix_page():
         ntfx_obj = NetflixPage(when = '2025-04-18')
         print(ntfx_obj,flush = True)
         return ntfx_obj.get_dict_obj()
-    
-    # @task
-    # def get_ntfx_obj(ntfx_obj:NetflixPage):
-    #     return ntfx_obj.get_dict_obj()
     
     @task
     def insert_doc_into_db(ntfx_obj_doc:dict):

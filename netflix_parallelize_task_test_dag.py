@@ -14,16 +14,22 @@ from trending_on_netflix.config import mongo_db_credentials, countries
     tags = ["batch-insert", "parallel", "celery"],
 )
 def netflix_parallelize_task_test_dag():
-
+    '''
+    This is a DAG which showcases parallelization of tasks using celery
+    '''
     @task
     def get_batched_countries():
+        '''
+        Divide the Regions into batches of 15
+        '''
         countries_to_search = ['Global']+list(countries.keys())
         return [countries_to_search[i:i+15] for i in range(0,len(countries_to_search),15)]
     
     @task
     def fetch_netflix_page(countries:list[str]):
         print(countries,flush=True)
-        
+
+        #Generate the top 10 list for the countries provided
         dict_list = []
         for country in countries:
             ntfx_obj = NetflixPage(geography=country)
@@ -35,25 +41,11 @@ def netflix_parallelize_task_test_dag():
             ip_add = mongo_db_credentials['ip'],
             port = mongo_db_credentials['port']
             )
+        #Insert all the lists in bulk
         ids = mongo_client.insert('Trending_On_Netflix','Weekly',dict_list)
         print(ids,flush = True)
-        # return ntfx_obj.get_dict_obj()
-    
-    # @task
-    # def insert_docs_into_db(ntfx_obj_docs:list[dict]):
-    #     mongo_client = MongoDBClient(
-    #         username = mongo_db_credentials['username'],
-    #         password = mongo_db_credentials['password'],
-    #         ip_add = mongo_db_credentials['ip'],
-    #         port = mongo_db_credentials['port']
-    #         )
-    #     print("mongo client created",flush=True)
-    #     ids = mongo_client.insert('Trending_On_Netflix','Weekly', ntfx_obj_docs)
-        
-    #     print(ids,flush = True)
 
     countries_to_search = get_batched_countries()
     fetch_netflix_page.expand(countries=countries_to_search)
-    # insert_docs_into_db(top10_lists)
 
 netflix_parallelize_task_test_dag()

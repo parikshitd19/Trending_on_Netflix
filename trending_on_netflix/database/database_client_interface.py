@@ -6,7 +6,7 @@ class DatabaseClientInterface(ABC):
     
     def __construct_url(self):
         pass
-
+    
     def __check_connection_valid(self):
         pass
 
