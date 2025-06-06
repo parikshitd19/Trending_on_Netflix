@@ -18,12 +18,17 @@ def netflix_weekly_global_dag():
     
     @task(task_id="fetch_ntfx_page")
     def fetch_ntfx_page(media_type:str):
+        '''
+        Fetch the media_type list on the netflix page  
+        '''
         ntfx_obj = NetflixPage(media_type=media_type)
         return ntfx_obj.get_dict_obj()
     
     @task(task_id='insert_docs_into_db')
     def insert_docs_into_db(ntfx_obj_docs:list[dict]):
-        print(type(ntfx_obj_docs),type(ntfx_obj_docs[0]),len(ntfx_obj_docs),ntfx_obj_docs[0],flush=True)
+        '''
+        Insert list of documents in the database
+        '''
         mongo_client = MongoDBClient(
             username = mongo_db_credentials['username'],
             password = mongo_db_credentials['password'],
@@ -34,16 +39,16 @@ def netflix_weekly_global_dag():
         
         print(ids,flush = True)
     
-    @task
+    @task(task_id='collect_docs')
     def collect_docs(docs):
-        print(docs,flush=True)
+        '''
+        Collate the documents into a list
+        '''
         return list(docs)
     
-    # media_types = None
-    # if geo == 'Global':
+   
     media_types = list(global_lists_url_additions.values())
-    # else:
-    #     media_types = list(country_lists_url_additions.values())
+
     run_this_first = EmptyOperator(task_id="start_workflow")
     fetched = fetch_ntfx_page.expand(media_type=media_types)
     docs = collect_docs(fetched)
