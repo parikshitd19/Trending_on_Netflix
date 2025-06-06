@@ -106,7 +106,7 @@ class NetflixPage:
             'geography':self.geography,
             'media_type':get_media_type_geo(self.geography,self.media_type),
             'query_url':self.url,
-            'search_date':self.when,
+            # 'search_date':self.when,
             # 'list_start_date':self.start_date.strftime("%Y-%m-%d"),
             # 'list_end_date':self.end_date.strftime("%Y-%m-%d"),
             'list_start_date':self.start_date,

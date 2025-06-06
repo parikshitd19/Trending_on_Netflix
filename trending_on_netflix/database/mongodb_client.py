@@ -80,6 +80,7 @@ class MongoDBClient(DatabaseClientInterface):
             return inserted_id_list.inserted_ids
         else:
             raise Exception("Invalid Database or Collection")
+        
     
         
     
